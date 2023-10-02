@@ -1,5 +1,5 @@
 # practica-1-TDW
-Evaluacion practica 1 Taller Avanzado Desarrollo Web
+Evaluación practica 1 Taller Avanzado Desarrollo Web
 
 Integrantes:
-Nicolas Ignacio Barraza Estrada
+Nicolás Ignacio Barraza Estrada
