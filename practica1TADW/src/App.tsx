@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react';
+import Grid from '@mui/material/Grid';
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Grid container spacing={80} style={{ height: '200vh' }}>
+      <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+        <div className="section">
+          <h2>Perfil</h2>
+          {/* Agrega tu contenido de "imagen" aquí */}
+        </div>
+      </Grid>
+      <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+        <div className="section">
+          <h2>Aceptados</h2>
+          {/* Agrega tu contenido de "aceptados" aquí */}
+        </div>
+      </Grid>
+      <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+        <div className="section">
+          <h2>Rechazados</h2>
+          {/* Agrega tu contenido de "rechazados" aquí */}
+        </div>
+      </Grid>
+    </Grid>
+  );
 }
 
-export default App
+export default App;
+
