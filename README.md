@@ -5,5 +5,5 @@ Integrantes:
 Nicolás Ignacio Barraza Estrada
 
 Instrucciones:
-$ cd practica1TADW/
-$ npm run dev
++ $ cd practica1TADW/
++ $ npm run dev
