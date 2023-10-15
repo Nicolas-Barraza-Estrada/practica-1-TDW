@@ -1,6 +1,8 @@
 // QueryPerros.jsx
 import React, { useState, useEffect } from 'react';
 import { LoremIpsum } from "lorem-ipsum";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
@@ -13,31 +15,21 @@ const lorem = new LoremIpsum({
   }
 });
 
-export const QueryPerros = ({ onProfileLoaded }) => {
-  const loadProfileImage = () => {
-    console.log("Cargando imagen...");
-    fetch('https://dog.ceo/api/breeds/image/random')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Imagen cargada con éxito.");
-        if (data.status === 'success') {
-          const newProfile = {
-            nombre: lorem.generateWords(2),
-            descripcion: lorem.generateSentences(3),
-            imagenUrl: data.message,
-          };
-          onProfileLoaded(newProfile);
-        }
-      })
-      .catch((error) => {
-        console.error('Error al cargar la imagen:', error);
-      });
-  };
-  
+export function useQueryPerros() {
+  return useQuery(["QueryPerros"], QueryPerros, {
+    retry: 0,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    keepPreviousData: false,
+    enabled: true,
+  });
+}
 
-  useEffect(() => {
-    loadProfileImage();
-  }, []);
-
-  return null;
+export const QueryPerros = async () => {
+  let urlBase = "https://dog.ceo/api/breeds/image/random";
+  const { data } = await axios.get(urlBase);
+  let nombre = lorem.generateWords(2);
+  let descripcion = lorem.generateSentences(3);
+  console.log(data)
+  return { data, nombre, descripcion };
 };
