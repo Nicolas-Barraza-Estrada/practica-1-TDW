@@ -9,6 +9,7 @@ import {
   CardContent,
   CardMedia,
   Divider,
+  Typography,
 } from "@mui/material";
 
 function Home() {
@@ -21,71 +22,96 @@ function Home() {
   };
 
   const handleAceptar = (perro) => {
-    setAceptados((aceptados) => [perro,...aceptados]);
-    //console.log(aceptados)
+    if (!aceptados.includes(perro)) {
+    setAceptados((aceptados) => [perro, ...aceptados]);
     refetch(); // Recargar el perfil del perro
+    }
+    
   };
 
   const handleRechazar = (perro) => {
-    setRechazados((rechazados) => [perro,...rechazados]);
-    //console.log(aceptados)
-    refetch(); // Recargar el perfil del perro
+    if (!rechazados.includes(perro)) {
+      setRechazados((rechazados) => [perro, ...rechazados]);
+      refetch(); // Recargar el perfil del perro
+    }
+    
+  };
+
+  const retractarAceptar = (perro) => {
+    if (!rechazados.includes(perro)) {
+      setRechazados((rechazados) => [perro, ...rechazados]);
+      let otros;
+      otros = aceptados.filter((item) => item !== perro);
+      setAceptados(otros);
+    }
+
+  };
+
+  const retractarRechazar = (perro) => {
+    if (!aceptados.includes(perro)) {
+      setAceptados((aceptados) => [perro, ...aceptados]);
+      let otros;
+      otros = rechazados.filter((item) => item !== perro);
+      setRechazados(otros);
+    }
   };
 
   return (
-    <Grid container spacing={4} style={{ height: '100vh',width:'160vh' }}>
-      <Grid item xs={12} sm={4} sx={{ maxWidth: 10 }}>
+    <Grid container spacing={4} style={{ height: '100vh', width: '160vh' }}>
+      <Grid item xs={12} sm={4}>
         <div className="home">
-          <h2>............Perfil</h2>
+        <Typography variant="h4" align="left">Perfil</Typography>
           {isLoading ? (
             <p>Cargando datos...</p>
           ) : isError ? (
             <Alert severity="error">Error al cargar datos</Alert>
           ) : (
-            <Card sx={{ maxWidth: 300}}>
+            <Card sx={{ maxWidth: 300 }}>
               <CardMedia component="img" image={data.link} />
-              
               <CardContent>
-                Nombre : {data.nombre} <br/>
+                Nombre : {data.nombre} <br />
                 Descripción : {data.descripcion}
               </CardContent>
             </Card>
           )}
-          <Button variant="contained" color="primary" onClick={() => handleAceptar(data)}>Aceptar</Button><br/>
-          <Button variant="contained" color="primary" onClick={() => handleRechazar(data)}>Rechazar</Button><br/>
+          <Button variant="contained" color="primary" onClick={() => handleAceptar(data)}>Aceptar</Button><br />
+          <Button variant="contained" color="primary" onClick={() => handleRechazar(data)}>Rechazar</Button><br />
         </div>
       </Grid>
       <Grid item xs={12} sm={4}>
         <div className="section">
-          <h2>............Aceptados</h2>
+        <Typography variant="h4" align="left">Aceptados</Typography>
           {aceptados.map((item, index) => (
-            
-<>
-            <Card sx={{ maxWidth: 300}}>
-            <CardMedia component="img" image={item.link} />
-            <CardContent>
-              Nombre : {item.nombre} <br/>
-              Descripción : {item.descripcion}
-            </CardContent>
-          </Card>
-          </>
+            <div key={index}>
+              <Divider />
+              <Card sx={{ maxWidth: 300 }}>
+                <CardMedia component="img" image={item.link} />
+                <CardContent>
+                  Nombre : {item.nombre} <br />
+                  Descripción : {item.descripcion}
+                </CardContent>
+              </Card>
+              <Button variant="contained" color="primary" onClick={() => retractarAceptar(item)}>Rechazar</Button><br />
+            </div>
           ))}
-
         </div>
       </Grid>
       <Grid item xs={12} sm={4}>
         <div className="section">
-          <h2>............Rechazados</h2>
+        <Typography variant="h4" align="left">Rechazados</Typography>
           {rechazados.map((item, index) => (
-            <Card sx={{ maxWidth: 300}}>
-            <CardMedia component="img" image={item.link} />
-            <CardContent>
-              Nombre : {item.nombre} <br/>
-              Descripción : {item.descripcion}
-              <br/>
-            </CardContent>
-          </Card>
-          
+            <div key={index}>
+              <Divider />
+              <Card sx={{ maxWidth: 300 }}>
+                <CardMedia component="img" image={item.link} />
+                <CardContent>
+                  Nombre : {item.nombre} <br />
+                  Descripción : {item.descripcion}
+                  <br />
+                </CardContent>
+              </Card>
+              <Button variant="contained" color="primary" onClick={() => retractarRechazar(item)}>Aceptar</Button><br />
+            </div>
           ))}
         </div>
       </Grid>
