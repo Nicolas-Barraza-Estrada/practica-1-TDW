@@ -51,7 +51,7 @@ function Home() {
 
   return (
     <Grid container spacing={4} style={{ height: '100vh', width: '160vh' }}>
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={2} md={4} >
         <div className="home">
           <Typography variant="h4" align="left">Perfil</Typography>
           {isLoading ? (
@@ -71,7 +71,7 @@ function Home() {
           <Button variant="contained" color="primary" onClick={() => handleRechazar(data)}>Rechazar</Button><br />
         </div>
       </Grid>
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={4} md={4}>
         <div className="section" style={{ maxHeight: '100vh', overflow: 'auto' }}>
           <Typography variant="h4" align="left">Aceptados</Typography>
           {aceptados.map((item, index) => (
@@ -103,7 +103,7 @@ function Home() {
           ))}
         </div>
       </Grid>
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={12} md={4}>
         <div className="section" style={{ maxHeight: '100vh', overflow: 'auto' }}>
           <Typography variant="h4" align="left">Rechazados</Typography>
           {rechazados.map((item, index) => (
