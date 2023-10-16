@@ -30,6 +30,5 @@ export const QueryPerros = async () => {
   const { data } = await axios.get(urlBase);
   let nombre = lorem.generateWords(2);
   let descripcion = lorem.generateSentences(3);
-  console.log(data)
-  return { data, nombre, descripcion };
+  return { link: data.message, nombre, descripcion };
 };
