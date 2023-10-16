@@ -1,4 +1,3 @@
-// QueryPerros.jsx
 import React, { useState, useEffect } from 'react';
 import { LoremIpsum } from "lorem-ipsum";
 import { useQuery } from "react-query";
@@ -28,7 +27,26 @@ export function useQueryPerros() {
 export const QueryPerros = async () => {
   let urlBase = "https://dog.ceo/api/breeds/image/random";
   const { data } = await axios.get(urlBase);
-  let nombre = lorem.generateWords(2);
-  let descripcion = lorem.generateSentences(3);
+  
+  // Generar un nombre de 6 letras
+  const nombre = generateRandomName(6);
+  
+  // Generar un párrafo de longitud aleatoria pero corta
+  const descripcion = lorem.generateSentences(getRandomInt(2, 5));
+  
   return { link: data.message, nombre, descripcion };
 };
+
+function generateRandomName(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  let result = '';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
