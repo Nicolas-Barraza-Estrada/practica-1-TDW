@@ -12,20 +12,15 @@ import {
 
 function Home() {
  const { data, isLoading, isError } = useQueryPerros();
-  const [perroActual, setPerroActual] = useState(null);
   const [aceptados, setAceptados] = useState([]);
   const [rechazados, setRechazados] = useState([]);
 
-  useEffect(() => {
-    setPerroActual(data); // Almacena el perro actual al obtenerlo
-  }, [data]);
+
 
   const handleAceptar = (valor) => {
-    setAceptados((aceptados) => [valor,...aceptados]);
   };
 
   const handleRechazar = (valor) => {
-    setRechazados((rechazados) => [valor,...rechazados]);
   };
 
   return (
@@ -46,24 +41,18 @@ function Home() {
               </CardContent>
             </Card>
           )}
-          <Button variant="contained" color="primary" onClick={() => handleAceptar(data)}>Aceptar</Button>
-          <Button variant="contained" color="primary" onClick={() => handleRechazar(data)}>Rechazar</Button>
+          <Button variant="contained" color="primary" onClick={() => handleAceptar()}>Aceptar</Button>
+          <Button variant="contained" color="primary" onClick={() => handleRechazar()}>Rechazar</Button>
         </div>
       </Grid>
       <Grid item xs={12} sm={4}>
         <div className="section">
           <h2>Aceptados</h2>
-          {aceptados.map((perro, index) => (
-            <Profile key={index} data={perro} />
-          ))}
         </div>
       </Grid>
       <Grid item xs={12} sm={4}>
         <div className="section">
           <h2>Rechazados</h2>
-          {rechazados.map((perro, index) => (
-            <Profile key={index} data={perro} />
-          ))}
         </div>
       </Grid>
     </Grid>
