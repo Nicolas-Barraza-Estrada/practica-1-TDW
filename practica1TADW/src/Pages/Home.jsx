@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import { useQueryPerros } from '../queries/queriesPerros';
 import {
   Alert,
@@ -12,6 +13,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  CircularProgress,
 } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -60,31 +62,31 @@ function Home() {
   };
 
   return (
-    <Grid container spacing={5} style={{ height: '100vh', width: '160vh' }}>
-      <Grid item xs={12} sm={2} md={4} >
-        <div className="home">
-          <Typography variant="h4" align="left">Perfil</Typography>
-          {isLoading ? (
-            <p>Cargando datos...</p>
-          ) : isError ? (
-            <Alert severity="error">Error al cargar datos</Alert>
-          ) : (
-            <Card sx={{ maxWidth: 250,maxHeight:400,minWidth:250,minHeight:200 }}>
-              <CardMedia sx={{ maxWidth: 250,maxHeight:200,minWidth: 200,minHeight:80}} component="img" image={data.link} />
-              
-              <CardContent style={{ overflow: 'auto' }}>
-                Nombre : {data.nombre} <br />
-                Descripción : {data.descripcion}  
-              </CardContent>
-            </Card>
-          )}
-          <Button variant="contained" color="primary" onClick={() => handleAceptar(data)}>Aceptar</Button><br />
-          <Button variant="contained" color="primary" onClick={() => handleRechazar(data)}>Rechazar</Button><br />
-        </div>
-      </Grid>
+  <Grid container spacing={4} style={{ height: '100vh', width: '160vh' }}marginLeft={1} >
+    <Grid item xs={12} sm={4} md={4} >
+          <div className="home">
+            <Typography variant="h4" align="left" padding={1}>Perfil</Typography>
+            {isLoading ? (
+              <CircularProgress />
+            ) : isError ? (
+              <Alert severity="error">Error al cargar datos</Alert>
+            ) : (
+              <Card sx={{ maxWidth: 350, maxHeight: 400, minWidth: 350, minHeight: 200 }}>
+                <CardMedia component="img" image={data?.link} sx={{ maxWidth: 350, maxHeight: 200, minWidth: 350, minHeight: 80 }} />
+                <CardContent style={{ overflow: 'auto' }}>
+                  Nombre: {data?.nombre} <br />
+                  Descripción: {data?.descripcion}
+                </CardContent>
+              </Card>
+            )}
+            <Button variant="contained" color="primary" onClick={() => handleAceptar(data)}>Aceptar</Button>
+            <Button variant="contained" color="secondary" onClick={() => handleRechazar(data)}>Rechazar</Button><br />
+          </div>
+        </Grid>
+
       <Grid item xs={12} sm={4} md={4}>
         <div className="section" style={{ maxHeight: '100vh', overflow: 'auto' }}>
-          <Typography variant="h4" align="left">Aceptados</Typography>
+          <Typography variant="h4" align="left" padding={1}>Aceptados</Typography>
           {aceptados.map((item, index) => (
             <div key={index}>
               <Divider />
@@ -99,7 +101,7 @@ function Home() {
                       <Typography variant="h6">{item.nombre}</Typography>
                     </Grid>
                     <Grid item>
-                      <Button variant="contained" color="primary" onClick={() => retractarAceptar(item)}>Rechazar</Button>
+                      <Button variant="contained" color="secondary" onClick={() => retractarAceptar(item)}>Rechazar</Button>
                     </Grid>
                   </Grid>
   
@@ -120,7 +122,7 @@ function Home() {
       </Grid>
       <Grid item xs={12} sm={12} md={4}>
         <div className="section" style={{ maxHeight: '100vh', overflow: 'auto' }}>
-          <Typography variant="h4" align="left">Rechazados</Typography>
+          <Typography variant="h4" align="left" padding={1}>Rechazados</Typography>
           {rechazados.map((item, index) => (
             <div key={index}>
               <Divider />

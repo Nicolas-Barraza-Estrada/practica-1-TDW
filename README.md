@@ -6,4 +6,5 @@ Nicolás Ignacio Barraza Estrada
 
 Instrucciones:
 + $ cd practica1TADW/
++ $ npm install
 + $ npm run dev
