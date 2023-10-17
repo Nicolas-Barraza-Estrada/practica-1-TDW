@@ -13,11 +13,21 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+
 
 function Home() {
   const { data, isLoading, isError, refetch } = useQueryPerros();
   const [aceptados, setAceptados] = useState([]);
   const [rechazados, setRechazados] = useState([]);
+  const [expandedDescription, setExpandedDescription] = useState(null);
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
 
   const handleAceptar = (perro) => {
     if (!aceptados.includes(perro)) {
@@ -50,7 +60,7 @@ function Home() {
   };
 
   return (
-    <Grid container spacing={4} style={{ height: '100vh', width: '160vh' }}>
+    <Grid container spacing={5} style={{ height: '100vh', width: '160vh' }}>
       <Grid item xs={12} sm={2} md={4} >
         <div className="home">
           <Typography variant="h4" align="left">Perfil</Typography>
@@ -59,11 +69,12 @@ function Home() {
           ) : isError ? (
             <Alert severity="error">Error al cargar datos</Alert>
           ) : (
-            <Card sx={{ maxWidth: 250 }}>
-              <CardMedia component="img" image={data.link} />
-              <CardContent>
+            <Card sx={{ maxWidth: 250,maxHeight:400,minWidth:250,minHeight:200 }}>
+              <CardMedia sx={{ maxWidth: 250,maxHeight:200,minWidth: 200,minHeight:80}} component="img" image={data.link} />
+              
+              <CardContent style={{ overflow: 'auto' }}>
                 Nombre : {data.nombre} <br />
-                Descripción : {data.descripcion}
+                Descripción : {data.descripcion}  
               </CardContent>
             </Card>
           )}
@@ -92,8 +103,12 @@ function Home() {
                     </Grid>
                   </Grid>
   
-                  <Accordion>
-                    <AccordionSummary>Descripción</AccordionSummary>
+                  <Accordion expanded={expanded === index}
+                    onChange={handleChange(index)}  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1bh-content"
+                      id="panel1bh-header">Descripción</AccordionSummary>
                     <AccordionDetails>
                       <Typography>{item.descripcion}</Typography>
                     </AccordionDetails>
@@ -123,8 +138,14 @@ function Home() {
                       <Button variant="contained" color="primary" onClick={() => retractarRechazar(item)}>Aceptar </Button>
                     </Grid>
                   </Grid>
-                  <Accordion>
-                    <AccordionSummary>Descripción</AccordionSummary>
+                  <Accordion
+                    expanded={expandedDescription === index}
+                    onChange={() => setExpandedDescription(expandedDescription === index ? null : index)}
+                  > 
+                    <AccordionSummary 
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls={`panel${index}bh-content`}
+                      id={`panel${index}bh-header`}>Descripción</AccordionSummary>
                     <AccordionDetails>
                       <Typography>{item.descripcion}</Typography>
                     </AccordionDetails>
